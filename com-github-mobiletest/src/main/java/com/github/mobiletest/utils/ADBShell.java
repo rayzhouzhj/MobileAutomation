@@ -257,29 +257,4 @@ public class ADBShell {
 		}
 	}
 
-	public static void main(String... args)
-	{
-		System.out.println(getScreenDisplayStatus("FOTGLMH621709388")[0]);
-		System.out.println(getScreenDisplayStatus("FOTGLMH621709388")[1]);
-
-		//		if(captureScreen("FOTGLMH621709540", "snap.png", "D:/TestCase"))
-		//		{
-		//			System.out.println("Capture Screen Successfully.");
-		//			String output = OCRUtil.doOCR("D:/TestCase" + File.separator + "snap.png");
-		//			System.out.println(output);
-		//			
-		//			if(output.contains("I agree to the Terms & Conditions"))
-		//			{
-		//				System.out.println("Welcome Page is displayed successfully.");
-		//			}
-		//			else
-		//			{
-		//				System.out.println("Does not reach welcome page yet.");
-		//			}
-		//		}
-		//		else
-		//		{
-		//			System.out.println("Error when capturing screen.");
-		//		}
-	}
 }

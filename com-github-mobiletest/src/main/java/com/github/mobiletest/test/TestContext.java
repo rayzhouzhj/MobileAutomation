@@ -46,10 +46,4 @@ public class TestContext {
 		return variables.getProperty(variableName);
 	}
 
-	public static void main(String...strings)
-	{
-		TestContext.getInstance().setVariable("Test", "Value");
-		TestContext.getInstance().setVariable("LogFolder", ".");
-		System.out.println(TestContext.getInstance().getVariable("Empty"));
-	}
 }

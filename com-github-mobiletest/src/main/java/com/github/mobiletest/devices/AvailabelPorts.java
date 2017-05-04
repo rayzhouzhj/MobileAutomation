@@ -12,12 +12,4 @@ public class AvailabelPorts {
 		socket.close();
 		return port;
 	}
-	
-	public static void main(String[] args) throws Exception 
-	{
-		AvailabelPorts ap = new AvailabelPorts();
-		for(int i=0;i<100;i++)
-			System.out.println(ap.getPort());
-	}
-
 }

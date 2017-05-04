@@ -195,10 +195,4 @@ public class DeviceConfiguration {
 		return deviceList;
 	}
 	
-	public static void main(String[] args) throws Exception {
-		DeviceConfiguration gd = new DeviceConfiguration();
-//		gd.startADB();	
-		gd.getDivces();
-//		gd.stopADB();
-	}
 }

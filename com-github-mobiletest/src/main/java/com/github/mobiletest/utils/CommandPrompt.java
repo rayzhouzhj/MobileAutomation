@@ -112,17 +112,4 @@ public class CommandPrompt {
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
-	
-		Process process = CommandPrompt.executeCommand("adb -s FOTGLMH621709540 shell logcat -v time Telephony:V *:S");
-		BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-		String line="";
-		while((line=reader.readLine()) != null){
-			
-			if(line.isEmpty()) continue;
-			
-			System.out.println(line);
-		}
-		
-	}
 }

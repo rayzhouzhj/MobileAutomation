@@ -6,28 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskManagerUtil {
-	public static void main(String[] args) {
-		List<String> existingProcessList = findProcess("usr/bin/java -jar /Users");
-
-		List<String> newProcessList = findProcess("usr/bin/java -jar /Users");
-
-		for(String process : existingProcessList)
-		{
-			newProcessList.remove(process);
-		}
-
-		if(newProcessList.size() > 0)
-		{
-			killProcess(newProcessList.get(0));
-		}
-		else
-		{
-			System.out.println("INFO: No new usr/bin/java -jar /Users is created.");
-		}
-
-
-
-	}
 
 	public static List<String> findProcess(String processName) {
 		List<String> processList = new ArrayList<String>();
