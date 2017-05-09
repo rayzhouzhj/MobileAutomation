@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<template>
+  <script-list>
+    <script>
+      <id>0</id>
+      <name>testMethod1</name>
+      <classname>com.github.testlibs.testcases.TestCalculator.testMethod1</classname>
+      <device>PHAGLMA662201654</device>
+      <runtime>00:30</runtime>
+      <parameters>Number1="2" Number2="3" </parameters>
+      <status>Passed</status>
+      <comment/>
+      <report>log/Device-TGnCo TG-L800S-PHAGLMA662201654/09-May-2017/TestCalculator/testMethod1/session2/result.html</report>
+      <starttime>5/9/17 8:22 PM</starttime>
+      <endtime>5/9/17 8:23 PM</endtime>
+    </script>
+    <script>
+      <id>1</id>
+      <name>testMethod2</name>
+      <classname>com.github.testlibs.testcases.TestCalculator.testMethod2</classname>
+      <device>PHAGLMA662201654</device>
+      <runtime>00:30</runtime>
+      <parameters>Number1="2" Number2="5" </parameters>
+      <status>Passed</status>
+      <comment/>
+      <report>log/Device-TGnCo TG-L800S-PHAGLMA662201654/09-May-2017/TestCalculator/testMethod2/session2/result.html</report>
+      <starttime>5/9/17 8:23 PM</starttime>
+      <endtime>5/9/17 8:24 PM</endtime>
+    </script>
+  </script-list>
+</template>
