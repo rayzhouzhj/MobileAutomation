@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import com.github.testclient.ui.components.ButtonTabComponent;
-import com.github.testclient.ui.components.DeviceControlPane;
+import com.github.testclient.ui.components.TestSuiteControlPane;
 import com.github.testclient.ui.components.ToolMenuBar;
 import com.github.testclient.ui.components.listener.ToolWindowListener;
 import com.github.testclient.util.AndroidDevice;
@@ -68,7 +68,7 @@ public class TestManagerFrame extends JFrame {
         // Initialize devices base on selection
         if(option == null)
         {
-        	devicesTabbdPane.addTab("Temp", new DeviceControlPane(null, this.devices, templateName));
+        	devicesTabbdPane.addTab("Temp", new TestSuiteControlPane(null, this.devices, templateName));
             devicesTabbdPane.setTabComponentAt(0, new ButtonTabComponent(devicesTabbdPane));
         }
         else if("All Devices".equalsIgnoreCase(option))
@@ -76,9 +76,9 @@ public class TestManagerFrame extends JFrame {
         	for(int index = 0; index < this.devices.size(); index++)
         	{
         		AndroidDevice device = this.devices.get(index);
-        		devicesTabbdPane.addTab(device.getDeviceID(), new DeviceControlPane(device, this.devices, templateName));
-                devicesTabbdPane.setTabComponentAt(index, new ButtonTabComponent(devicesTabbdPane));
-                devicesTabbdPane.setToolTipTextAt(index, "Device: " + device.getDeviceName() + "-" + device.getDeviceID());
+//        		devicesTabbdPane.addTab(device.getDeviceID(), new TestSuiteControlPane(device, this.devices, templateName));
+//                devicesTabbdPane.setTabComponentAt(index, new ButtonTabComponent(devicesTabbdPane));
+//                devicesTabbdPane.setToolTipTextAt(index, "Device: " + device.getDeviceName() + "-" + device.getDeviceID());
         	}
         }
         else
@@ -87,9 +87,9 @@ public class TestManagerFrame extends JFrame {
     		{
     			if(option.contains(device.getDeviceID()))
     			{
-    				devicesTabbdPane.addTab(device.getDeviceID(), new DeviceControlPane(device, this.devices, templateName));
-                    devicesTabbdPane.setTabComponentAt(0, new ButtonTabComponent(devicesTabbdPane));
-                    devicesTabbdPane.setToolTipTextAt(0, "Device: " + device.getDeviceName() + "-" + device.getDeviceID());
+//    				devicesTabbdPane.addTab(device.getDeviceID(), new TestSuiteControlPane(device, this.devices, templateName));
+//                    devicesTabbdPane.setTabComponentAt(0, new ButtonTabComponent(devicesTabbdPane));
+//                    devicesTabbdPane.setToolTipTextAt(0, "Device: " + device.getDeviceName() + "-" + device.getDeviceID());
                     
                     break;
     			}

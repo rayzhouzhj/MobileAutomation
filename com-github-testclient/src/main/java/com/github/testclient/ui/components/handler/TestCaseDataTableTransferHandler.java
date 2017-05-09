@@ -9,7 +9,7 @@ import javax.swing.TransferHandler;
 
 import com.github.testclient.models.TestCase;
 import com.github.testclient.ui.components.DataTableModel;
-import com.github.testclient.ui.components.DeviceControlPane;
+import com.github.testclient.ui.components.TestSuiteControlPane;
 import com.github.testclient.ui.components.TestCaseDataTable;
 
 public class TestCaseDataTableTransferHandler extends TransferHandler {
@@ -20,9 +20,9 @@ public class TestCaseDataTableTransferHandler extends TransferHandler {
 	private static final long serialVersionUID = -859729261862388543L;
 	
 	private TestCaseDataTable table;
-	private DeviceControlPane deviceControlPane;
+	private TestSuiteControlPane deviceControlPane;
 
-	public TestCaseDataTableTransferHandler(DeviceControlPane deviceControlPane, TestCaseDataTable table)
+	public TestCaseDataTableTransferHandler(TestSuiteControlPane deviceControlPane, TestCaseDataTable table)
 	{
 		this.table = table;
 		this.deviceControlPane = deviceControlPane;
@@ -72,7 +72,6 @@ public class TestCaseDataTableTransferHandler extends TransferHandler {
 		for(String path : rowData)
 		{
 			testCase = new TestCase(path);
-			testCase.setDevice(this.deviceControlPane.getSelectedDevice());
 			((DataTableModel)this.table.getModel()).addRow(testCase);
 		}
 

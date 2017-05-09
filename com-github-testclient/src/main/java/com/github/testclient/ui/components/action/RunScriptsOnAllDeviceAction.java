@@ -6,7 +6,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JTabbedPane;
 
-import com.github.testclient.ui.components.DeviceControlPane;
+import com.github.testclient.ui.components.TestSuiteControlPane;
 
 public class RunScriptsOnAllDeviceAction extends AbstractAction{
 
@@ -26,7 +26,7 @@ public class RunScriptsOnAllDeviceAction extends AbstractAction{
 
 		for(int index = 0; index < tabCount; index++)
 		{
-			JButton runBtn = ((DeviceControlPane)tabbedPane.getComponentAt(index)).getRunButton();
+			JButton runBtn = ((TestSuiteControlPane)tabbedPane.getComponentAt(index)).getRunButton();
 			java.awt.EventQueue.invokeLater(new Runnable() {
 				public void run()
 				{

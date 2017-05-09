@@ -15,7 +15,7 @@ import com.github.lgooddatepicker.components.TimePicker;
 import com.github.lgooddatepicker.components.TimePickerSettings;
 import com.github.testclient.TestManager;
 import com.github.testclient.models.Timer;
-import com.github.testclient.ui.components.DeviceControlPane;
+import com.github.testclient.ui.components.TestSuiteControlPane;
 import com.github.testclient.ui.components.filter.IntFilter;
 import com.github.testclient.util.AndroidDevice;
 
@@ -30,24 +30,24 @@ public class SchedulerFrame extends javax.swing.JFrame {
 	 */
 	private static final long serialVersionUID = 4420831498398606623L;
 	
-	private DeviceControlPane deviceControlPane;
+	private TestSuiteControlPane deviceControlPane;
 	private Timer timer;
 	private boolean isScheduled = false;
 	private boolean isRunnable = false;
 	/**
 	 * Creates new form SchedulerFrame
 	 */
-	public SchedulerFrame(DeviceControlPane deviceControlPane) {
+	public SchedulerFrame(TestSuiteControlPane deviceControlPane) {
 		this.deviceControlPane = deviceControlPane;
 		initComponents();
 	}
 
 	public void updateTitle()
 	{
-		AndroidDevice device = deviceControlPane.getSelectedDevice();
-		if(device != null)
+		String name = deviceControlPane.getTestSuiteName();
+		if(name != null)
 		{
-			this.setTitle("Scheduler: " + device.getDeviceName() + "-" + device.getDeviceID());
+			this.setTitle("Scheduler: " + name);
 		}
 		else
 		{
@@ -418,7 +418,7 @@ public class SchedulerFrame extends javax.swing.JFrame {
 			@Override
 			public void run() {
 				System.out.println("Wait for Run button available");
-				TestManager tm = TestManager.getInstance(SchedulerFrame.this.deviceControlPane.getSelectedDevice());
+				TestManager tm = TestManager.getInstance(SchedulerFrame.this.deviceControlPane.getTestSuiteName());
 
 				while(!isRunnable)
 				{

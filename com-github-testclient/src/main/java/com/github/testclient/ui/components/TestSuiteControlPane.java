@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
+import com.github.testclient.context.Context;
 import com.github.testclient.ui.SchedulerFrame;
 import com.github.testclient.ui.TestManagerFrame;
 import com.github.testclient.ui.components.listener.RunButtonActionListener;
@@ -19,16 +20,17 @@ import com.github.testclient.ui.constant.ExecutionOption;
 import com.github.testclient.ui.constant.TestCaseDataTableColumns;
 import com.github.testclient.util.AndroidDevice;
 
-public class DeviceControlPane extends JPanel{
+public class TestSuiteControlPane extends JPanel{
 	private static final long serialVersionUID = 1L;
-	private AndroidDevice device;
-	private List<AndroidDevice> devices;
+	private String suiteName;
+	private List<AndroidDevice> associated_devices;
+	private List<AndroidDevice> all_devices;
 	private SchedulerFrame scheduler;
 	private String defaultTemplate;
 	
-	public DeviceControlPane(AndroidDevice selectedDevice, List<AndroidDevice> devices, String template) {
-		this.device = selectedDevice;
-		this.devices = devices;
+	public TestSuiteControlPane(List<AndroidDevice> selectedDevices, List<AndroidDevice> devices, String template) {
+		this.associated_devices = selectedDevices;
+		this.all_devices = devices;
 		this.defaultTemplate = template;
 		
 		initComponents();
@@ -37,8 +39,8 @@ public class DeviceControlPane extends JPanel{
 	/**
 	 * Creates new form NewUI
 	 */
-	public DeviceControlPane() {
-		devices = new ArrayList<>();
+	public TestSuiteControlPane() {
+		all_devices = new ArrayList<>();
 		initComponents();
 	}
 
@@ -91,7 +93,7 @@ public class DeviceControlPane extends JPanel{
         				ExecutionOption.NON_PASSED}));
         
         runButton.addActionListener(new RunButtonActionListener(this));
-        if(this.device == null)
+        if(this.associated_devices == null)
 		{
         	runButton.setEnabled(false);
 		}
@@ -207,30 +209,34 @@ public class DeviceControlPane extends JPanel{
 
 	public void associateDevice(AndroidDevice device)
 	{
-		this.device = device;
+		this.associated_devices.add(device);
 		
-		TestManagerFrame topFrame = (TestManagerFrame)SwingUtilities.getWindowAncestor(this);
-		JTabbedPane pane = topFrame.getTabbedPane();
-		int tabCount = pane.getTabCount();
-		for(int i = 0; i < tabCount; i++)
+		// If for Parallel testing
+		if(Context.getInstance().getAttribute("RUNNING_MODE").equals("PARALLEL"))
 		{
-			if(pane.getTitleAt(i).equals(this.device.getDeviceID()))
+			TestManagerFrame topFrame = (TestManagerFrame)SwingUtilities.getWindowAncestor(this);
+			JTabbedPane pane = topFrame.getTabbedPane();
+			int tabCount = pane.getTabCount();
+			for(int i = 0; i < tabCount; i++)
 			{
-				JOptionPane.showMessageDialog(null, "Device [" + device.getDeviceID() + "] exists at tab " + i);
-				return;
+				if(pane.getTitleAt(i).equals(this.associated_devices.get(0).getDeviceID()))
+				{
+					JOptionPane.showMessageDialog(null, "Device [" + device.getDeviceID() + "] exists at tab " + i);
+					return;
+				}
 			}
+
+			int index = pane.getSelectedIndex();
+			pane.setTitleAt(index, device.getDeviceID());
+			pane.setToolTipTextAt(index, "Device: " + device.getDeviceName() + "-" + device.getDeviceID());
+
+			this.endableRunButton();
+			this.revalidate();
+			this.repaint();
+
+			((DataTableModel)this.getTestCaseDataTable().getModel())
+			.updateColumnValue(TestCaseDataTableColumns.DEVICE.INDEX, device.getDeviceID());
 		}
-		
-		int index = pane.getSelectedIndex();
-		pane.setTitleAt(index, device.getDeviceID());
-		pane.setToolTipTextAt(index, "Device: " + device.getDeviceName() + "-" + device.getDeviceID());
-		
-		this.endableRunButton();
-		this.revalidate();
-		this.repaint();
-		
-		((DataTableModel)this.getTestCaseDataTable().getModel())
-		.updateColumnValue(TestCaseDataTableColumns.DEVICE.INDEX, device.getDeviceID());
 		
 	}
 	
@@ -254,14 +260,24 @@ public class DeviceControlPane extends JPanel{
 		return this.globalVarsTbl;
 	}
 	
-	public AndroidDevice getSelectedDevice()
+	public List<AndroidDevice> getSelectedDevice()
 	{
-		return this.device;
+		return this.associated_devices;
 	}
 	
 	public List<AndroidDevice> getAvailableDeviceList()
 	{
-		return this.devices;
+		return this.all_devices;
+	}
+	
+	public String getTestSuiteName()
+	{
+		return this.suiteName;
+	}
+	
+	public void setTestSuiteName(String name)
+	{
+		this.suiteName = name;
 	}
 	
 	public SchedulerFrame getScheduler()

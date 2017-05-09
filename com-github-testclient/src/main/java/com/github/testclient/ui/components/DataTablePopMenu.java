@@ -30,9 +30,9 @@ public class DataTablePopMenu extends JPopupMenu {
 	
 	
 	private DataTable dataTable;
-	private DeviceControlPane deviceControlPane;
+	private TestSuiteControlPane deviceControlPane;
 	
-	public DataTablePopMenu(DeviceControlPane deviceControlPane)
+	public DataTablePopMenu(TestSuiteControlPane deviceControlPane)
 	{
 		super();
 		
@@ -106,7 +106,7 @@ public class DataTablePopMenu extends JPopupMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
             	
-            	if(TestManager.getInstance(DataTablePopMenu.this.deviceControlPane.getSelectedDevice()).isRunning())
+            	if(TestManager.getInstance(DataTablePopMenu.this.deviceControlPane.getTestSuiteName()).isRunning())
             	{
             		JOptionPane.showMessageDialog(null, 
             				"Please stop scripts on current device before removing!", 
@@ -133,7 +133,7 @@ public class DataTablePopMenu extends JPopupMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
             	
-            	if(TestManager.getInstance(DataTablePopMenu.this.deviceControlPane.getSelectedDevice()).isRunning())
+            	if(TestManager.getInstance(DataTablePopMenu.this.deviceControlPane.getTestSuiteName()).isRunning())
             	{
             		JOptionPane.showMessageDialog(null, 
             				"Please stop scripts on current device before removing!", 

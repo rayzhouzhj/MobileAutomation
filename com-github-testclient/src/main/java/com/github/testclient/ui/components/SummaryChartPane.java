@@ -22,10 +22,10 @@ import com.github.testclient.ui.constant.TestCaseDataTableColumns;
 
 public class SummaryChartPane extends JPanel{
 
-	private DeviceControlPane deviceControlPane;
+	private TestSuiteControlPane deviceControlPane;
 	private TestCaseDataTable table;
 
-	public SummaryChartPane(DeviceControlPane pane, JTable table)
+	public SummaryChartPane(TestSuiteControlPane pane, JTable table)
 	{
 		this.deviceControlPane = pane;
 		this.table = (TestCaseDataTable)table;
@@ -118,25 +118,19 @@ public class SummaryChartPane extends JPanel{
 
 
 		// Update pane with the scheduled testcase status
-		TestManager testManager = TestManager.getInstance(this.deviceControlPane.getSelectedDevice());
+		TestManager testManager = TestManager.getInstance(this.deviceControlPane.getTestSuiteName());
 		if(testManager.isRunning())
 		{
 			int scheduled = testManager.getScheduledTestCaseCount();
-			int completed = testManager.getCompletedCount();
+			long completed = testManager.getCompletedCount();
 
 			this.scheduledScript.setText(String.format("%1$3s", scheduled));
 			this.completedScript.setText(String.format("%1$3s", completed));
-			String scriptName = testManager.getActiveTestCase().getScriptName();
-			scriptName = scriptName.length() >=20? (scriptName.substring(0, 17) + "...") : scriptName;
-			this.currentScript.setText(scriptName);
-			this.currentStatus.setText(testManager.getActiveTestCase().getStatus().toString());
 		}
 		else
 		{
 			this.scheduledScript.setText(String.format("%1$3s", 0));
 			this.completedScript.setText(String.format("%1$3s", 0));
-			this.currentScript.setText("NA");
-			this.currentStatus.setText("NA");
 		}
 
 		DefaultKeyedValues values = new DefaultKeyedValues();
