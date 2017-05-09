@@ -23,11 +23,6 @@ public class TestExecutor {
 			System.out.println("Argument: " + arg);
 		}
 		
-//		String className = "com.tinklabs.handy.testcases.TestHandy";
-//		String methodName = "testEraseData";
-//		String deviceName = "FOTGLMH630907431";
-//		int iteration = 2;
-		
 		String className = args[0];
 		String methodName = args[1];
 		String deviceID = args[2];
@@ -52,11 +47,6 @@ public class TestExecutor {
 			System.out.println(e);
 			System.exit(0);
 		}
-		
-//		String className = "com.tinklabs.handy.testcases.TestHandy";
-//		String methodName = "testEraseData";
-//		String deviceID = "FOTGLMH630907431";
-//		int iteration = 2;
 
 		String[] vars;
 		// set variables
