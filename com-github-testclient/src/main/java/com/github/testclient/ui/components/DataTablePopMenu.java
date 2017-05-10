@@ -47,7 +47,7 @@ public class DataTablePopMenu extends JPopupMenu {
 		this.add(addRow);
 		this.add(deleteRows);
 		this.add(duplicateRows);
-		this.add(associateDevice);
+//		this.add(associateDevice);
 		this.add(showLog);
 		
 		schedule.addActionListener(new ActionListener(){

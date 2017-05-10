@@ -40,8 +40,15 @@ public class ShowLogAction  extends AbstractAction{
 		TestManager tm = TestManager.getInstance(deviceControlPane.getTestSuiteName());
 		
 		LogViewerFrame logViewer = tm.getTestCaseByID(selectedRow).getLogViewer();
-		logViewer.setTitle("LogViewer: " + deviceControlPane.getTestSuiteName());
-		logViewer.setVisible(true);
+		if(logViewer != null)
+		{
+			logViewer.setVisible(true);
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Selected testcase is not Running!");
+			return;
+		}
 	}
 
 }

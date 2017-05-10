@@ -28,7 +28,8 @@ public class TestSuiteControlPane extends JPanel{
 	private SchedulerFrame scheduler;
 	private String defaultTemplate;
 	
-	public TestSuiteControlPane(List<AndroidDevice> selectedDevices, List<AndroidDevice> devices, String template) {
+	public TestSuiteControlPane(String suiteName, List<AndroidDevice> selectedDevices, List<AndroidDevice> devices, String template) {
+		this.suiteName = suiteName;
 		this.associated_devices = selectedDevices;
 		this.all_devices = devices;
 		this.defaultTemplate = template;
@@ -207,9 +208,9 @@ public class TestSuiteControlPane extends JPanel{
 
 	}// </editor-fold>                        
 
-	public void associateDevice(AndroidDevice device)
+	public void associateDevices(List<AndroidDevice> devices)
 	{
-		this.associated_devices.add(device);
+		this.associated_devices = devices;
 		
 		// If for Parallel testing
 		if(Context.getInstance().getAttribute("RUNNING_MODE").equals("PARALLEL"))
@@ -221,21 +222,21 @@ public class TestSuiteControlPane extends JPanel{
 			{
 				if(pane.getTitleAt(i).equals(this.associated_devices.get(0).getDeviceID()))
 				{
-					JOptionPane.showMessageDialog(null, "Device [" + device.getDeviceID() + "] exists at tab " + i);
+					JOptionPane.showMessageDialog(null, "Device [" + devices.get(0).getDeviceID() + "] exists at tab " + i);
 					return;
 				}
 			}
 
 			int index = pane.getSelectedIndex();
-			pane.setTitleAt(index, device.getDeviceID());
-			pane.setToolTipTextAt(index, "Device: " + device.getDeviceName() + "-" + device.getDeviceID());
+			pane.setTitleAt(index, devices.get(0).getDeviceID());
+			pane.setToolTipTextAt(index, "Device: " + devices.get(0).getDeviceName() + "-" + devices.get(0).getDeviceID());
 
 			this.endableRunButton();
 			this.revalidate();
 			this.repaint();
 
 			((DataTableModel)this.getTestCaseDataTable().getModel())
-			.updateColumnValue(TestCaseDataTableColumns.DEVICE.INDEX, device.getDeviceID());
+			.updateColumnValue(TestCaseDataTableColumns.DEVICE.INDEX, devices.get(0).getDeviceID());
 		}
 		
 	}
@@ -260,7 +261,7 @@ public class TestSuiteControlPane extends JPanel{
 		return this.globalVarsTbl;
 	}
 	
-	public List<AndroidDevice> getSelectedDevice()
+	public List<AndroidDevice> getSelectedDevices()
 	{
 		return this.associated_devices;
 	}

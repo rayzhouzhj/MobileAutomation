@@ -53,7 +53,10 @@ public class TestCase implements Runnable {
 	private LogViewerFrame logViewer;
 	private Logger m_logger = Logger.getLogger("TestCase");
 	private AtomicBoolean m_stopExecutionFlag = new AtomicBoolean(false);
-
+	private boolean m_isLockedByMe = false;
+	
+	private Object statusLock = new Object();
+	
 	public void setLogViewer(LogViewerFrame viewer)
 	{
 		this.logViewer = viewer;
@@ -64,6 +67,12 @@ public class TestCase implements Runnable {
 	{
 		return this.logViewer;
 	}
+	
+	public void removeLogViewer()
+	{
+		this.logViewer = null;
+	}
+	
 	public int getScriptId()
 	{
 		return m_scriptId;
@@ -230,11 +239,17 @@ public class TestCase implements Runnable {
 	}
 
 	public TestCaseStatus getStatus() {
-		return m_status;
+		synchronized (statusLock) 
+		{
+			return m_status;
+		}
 	}
 
 	public void setStatus(TestCaseStatus m_status) {
-		this.m_status = m_status;
+		synchronized (statusLock) 
+		{
+			this.m_status = m_status;
+		}
 	}
 
 	public String getDeviceID()
@@ -433,9 +448,6 @@ public class TestCase implements Runnable {
 			// Calculate the result file path
 			this.calculateResultFilePath();
 			
-			this.logViewer.setTitle(this.m_scriptDisplayName);
-			this.logViewer.repaint();
-			
 			// Get execution command
 			String statement = generateExecutionCommand();
 			m_logger.info("Exec Command: " + statement);
@@ -560,6 +572,8 @@ public class TestCase implements Runnable {
 
 	public boolean releaseJVMProcessLock()
 	{
+		if(!this.m_isLockedByMe) return true;
+		
 		try
 		{
 			Path lockFile = Paths.get("process.lck");
@@ -613,6 +627,8 @@ public class TestCase implements Runnable {
 				endTime = LocalDateTime.now();
 			}
 		}
+		
+		this.m_isLockedByMe = true;
 	}
 
 	public void stopNodeJSProcess()
