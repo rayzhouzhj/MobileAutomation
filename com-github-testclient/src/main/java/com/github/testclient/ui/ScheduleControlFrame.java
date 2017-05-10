@@ -14,7 +14,7 @@ import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.github.lgooddatepicker.components.TimePicker;
 import com.github.lgooddatepicker.components.TimePickerSettings;
 import com.github.testclient.models.Timer;
-import com.github.testclient.ui.components.DeviceControlPane;
+import com.github.testclient.ui.components.TestSuiteControlPane;
 import com.github.testclient.ui.components.filter.IntFilter;
 
 /**
@@ -284,7 +284,7 @@ public class ScheduleControlFrame extends javax.swing.JFrame {
 
 		for(int index = 0; index < tabCount; index++)
 		{
-			SchedulerFrame scheduler = ((DeviceControlPane)this.managerFrame.getTabbedPane().getComponentAt(index)).getScheduler();
+			SchedulerFrame scheduler = ((TestSuiteControlPane)this.managerFrame.getTabbedPane().getComponentAt(index)).getScheduler();
 			java.awt.EventQueue.invokeLater(new Runnable() {
 				public void run()
 				{
@@ -428,7 +428,7 @@ public class ScheduleControlFrame extends javax.swing.JFrame {
 
 			for(int index = 0; index < tabCount; index++)
 			{
-				SchedulerFrame scheduler = ((DeviceControlPane)this.managerFrame.getTabbedPane().getComponentAt(index)).getScheduler();
+				SchedulerFrame scheduler = ((TestSuiteControlPane)this.managerFrame.getTabbedPane().getComponentAt(index)).getScheduler();
 				if(scheduler.isScheduled())
 				{
 					// Update Next Running Session Time
@@ -456,7 +456,7 @@ public class ScheduleControlFrame extends javax.swing.JFrame {
 
 			for(int index = 0; index < tabCount; index++)
 			{
-				SchedulerFrame scheduler = ((DeviceControlPane)this.managerFrame.getTabbedPane().getComponentAt(index)).getScheduler();
+				SchedulerFrame scheduler = ((TestSuiteControlPane)this.managerFrame.getTabbedPane().getComponentAt(index)).getScheduler();
 				if(scheduler.isScheduled())
 				{
 					java.awt.EventQueue.invokeLater(new Runnable() {

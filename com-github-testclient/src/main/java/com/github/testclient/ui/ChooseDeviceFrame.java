@@ -218,7 +218,7 @@ public class ChooseDeviceFrame extends javax.swing.JFrame {
 		{
 			if(this.launchTestManagerFlag)
 			{
-				TestManagerFrame.launch(deviceInfo, this.devices, this.templateList.getSelectedItem().toString());
+				TestManagerFrame.launch(null, this.devices, this.templateList.getSelectedItem().toString());
 				this.setVisible(false);
 				isDeviceFound = true;
 				
@@ -232,7 +232,7 @@ public class ChooseDeviceFrame extends javax.swing.JFrame {
 			{
 				if(this.launchTestManagerFlag)
 				{
-					TestManagerFrame.launch(deviceInfo, this.devices, this.templateList.getSelectedItem().toString());
+					TestManagerFrame.launch(null, this.devices, this.templateList.getSelectedItem().toString());
 				}
 
 				this.selectedDevice = device;

@@ -6,14 +6,14 @@ import javax.swing.AbstractAction;
 
 import com.github.testclient.models.Devices;
 import com.github.testclient.ui.ChooseDeviceFrame;
-import com.github.testclient.ui.components.DeviceControlPane;
+import com.github.testclient.ui.components.TestSuiteControlPane;
 import com.github.testclient.util.AndroidDevice;
 
 public class AssociateDeviceAction extends AbstractAction{
 
-	private DeviceControlPane deviceControlPane;
+	private TestSuiteControlPane deviceControlPane;
 
-	public AssociateDeviceAction(DeviceControlPane deviceControlPane)
+	public AssociateDeviceAction(TestSuiteControlPane deviceControlPane)
 	{
 		super("Choose Device");
 		this.deviceControlPane = deviceControlPane;

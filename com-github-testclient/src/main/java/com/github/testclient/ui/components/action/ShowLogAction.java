@@ -7,30 +7,40 @@ import javax.swing.JOptionPane;
 
 import com.github.testclient.TestManager;
 import com.github.testclient.ui.LogViewerFrame;
-import com.github.testclient.ui.components.DeviceControlPane;
+import com.github.testclient.ui.components.TestSuiteControlPane;
 import com.github.testclient.util.AndroidDevice;
 
 public class ShowLogAction  extends AbstractAction{
 
-	private DeviceControlPane deviceControlPane;
+	private TestSuiteControlPane deviceControlPane;
 	
-	public ShowLogAction(DeviceControlPane deviceControlPane) {
+	public ShowLogAction(TestSuiteControlPane deviceControlPane) {
 		this.deviceControlPane = deviceControlPane;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		
-		if(this.deviceControlPane.getSelectedDevice() == null)
+		int[] rows = deviceControlPane.getTestCaseDataTable().getSelectedRows();
+		int selectedRow = -1;
+		
+		if(rows.length == 0)
 		{
-			JOptionPane.showMessageDialog(null, "No device is associated!");
-			
+			JOptionPane.showMessageDialog(null, "No testcase is selected!");
 			return;
 		}
 		
-		AndroidDevice device = deviceControlPane.getSelectedDevice();
-		LogViewerFrame logViewer = TestManager.getInstance(device).getLogViewer();
-		logViewer.setTitle("LogViewer: " + device.getDeviceName() + "-" + device.getDeviceID());
+		if(deviceControlPane.getTestCaseDataTable().getRowCount() == 0)
+		{
+			return;
+		}
+		
+		selectedRow = deviceControlPane.getTestCaseDataTable().convertRowIndexToModel(rows[0]);
+		
+		TestManager tm = TestManager.getInstance(deviceControlPane.getTestSuiteName());
+		
+		LogViewerFrame logViewer = tm.getTestCaseByID(selectedRow).getLogViewer();
+		logViewer.setTitle("LogViewer: " + deviceControlPane.getTestSuiteName());
 		logViewer.setVisible(true);
 	}
 

@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTabbedPane;
 
-import com.github.testclient.ui.components.DeviceControlPane;
+import com.github.testclient.ui.components.TestSuiteControlPane;
 
 public class StopScriptsOnAllDeviceAction extends AbstractAction{
 
@@ -27,8 +27,8 @@ public class StopScriptsOnAllDeviceAction extends AbstractAction{
 
 		for(int index = 0; index < tabCount; index++)
 		{
-			JButton stopBtn = ((DeviceControlPane)tabbedPane.getComponentAt(index)).getStopButton();
-			JComboBox stopOption = ((DeviceControlPane)tabbedPane.getComponentAt(index)).getStopOption();
+			JButton stopBtn = ((TestSuiteControlPane)tabbedPane.getComponentAt(index)).getStopButton();
+			JComboBox stopOption = ((TestSuiteControlPane)tabbedPane.getComponentAt(index)).getStopOption();
 			java.awt.EventQueue.invokeLater(new Runnable() {
 				public void run()
 				{

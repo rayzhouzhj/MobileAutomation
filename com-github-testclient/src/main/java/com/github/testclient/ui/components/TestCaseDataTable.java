@@ -31,10 +31,10 @@ import com.github.testclient.util.AndroidDevice;
 public class TestCaseDataTable extends DataTable {
 
 	private static final long serialVersionUID = 6608543108079420803L;
-	private DeviceControlPane deviceControlPane;
+	private TestSuiteControlPane deviceControlPane;
 	private List<AndroidDevice> availableDevices;
 
-	public TestCaseDataTable(DeviceControlPane deviceControlPane) {
+	public TestCaseDataTable(TestSuiteControlPane deviceControlPane) {
 		super(
 				new DataTableModel(
 						new String[]{"",
@@ -149,16 +149,15 @@ public class TestCaseDataTable extends DataTable {
 			((DataTableModel)this.getModel()).addEmptyRow();
 		}
 
-		TestCase tempTC;
+		TestCase tempTestCase;
 		for(int id : scriptMap.keySet())
 		{
 			script = scriptMap.get(id);
 			script.turnoffRef();
 
-			tempTC = new TestCase(script);
-			tempTC.setDevice(this.deviceControlPane.getSelectedDevice());
+			tempTestCase = new TestCase(script);
 			
-			((DataTableModel)this.getModel()).addRow(tempTC);
+			((DataTableModel)this.getModel()).addRow(tempTestCase);
 		}
 	}
 
@@ -199,14 +198,12 @@ public class TestCaseDataTable extends DataTable {
 					break;
 				}
 
-				deviceID = this.deviceControlPane.getSelectedDevice().getDeviceID();
-
 				list.add(new TestCase(
 						i,	// Row id
 						testName,
 						tcPath, 
 						parameters,
-						deviceID,
+						null,
 						priority, 
 						timeout));
 			}
@@ -256,7 +253,7 @@ public class TestCaseDataTable extends DataTable {
 					testName,
 					tcPath, 
 					parameters,
-					this.deviceControlPane.getSelectedDevice().getDeviceID(),
+					null,
 					priority, 
 					timeout, 
 					startTime,

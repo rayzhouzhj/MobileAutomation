@@ -234,6 +234,7 @@ public class DataTableModel extends AbstractTableModel {
 		data[row][TestCaseDataTableColumns.STATUS.INDEX] = testCase.getStatus().toString();
 		data[row][TestCaseDataTableColumns.COMMENT.INDEX] = testCase.getFirstErrorMessage();
 		data[row][TestCaseDataTableColumns.REPORT.INDEX] = testCase.getResultFilePath();
+		data[row][TestCaseDataTableColumns.DEVICE.INDEX] = testCase.getDeviceID();
 		
 		fireTableDataChanged();
 	}

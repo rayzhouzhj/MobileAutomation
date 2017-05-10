@@ -1,6 +1,8 @@
 package com.github.testclient.ui.components.action;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
@@ -8,7 +10,7 @@ import javax.swing.JTabbedPane;
 
 import com.github.testclient.models.Devices;
 import com.github.testclient.ui.components.ButtonTabComponent;
-import com.github.testclient.ui.components.DeviceControlPane;
+import com.github.testclient.ui.components.TestSuiteControlPane;
 import com.github.testclient.util.AndroidDevice;
 
 public class AddDeviceAction extends AbstractAction{
@@ -46,7 +48,9 @@ public class AddDeviceAction extends AbstractAction{
 				
 				if(!isDeviceFound)
 				{
-					this.deviceControlPane.addTab(tempDevice.getDeviceID(), new DeviceControlPane(tempDevice, Devices.getDevices(), null));
+					List<AndroidDevice> deviceList = new ArrayList<>();
+					deviceList.add(tempDevice);
+					this.deviceControlPane.addTab(tempDevice.getDeviceID(), new TestSuiteControlPane(deviceList, Devices.getDevices(), null));
 					this.deviceControlPane.setTabComponentAt(tabCount, new ButtonTabComponent(this.deviceControlPane));
 					this.deviceControlPane.setToolTipTextAt(tabCount, "Device: " + tempDevice.getDeviceName() + "-" + tempDevice.getDeviceID());
 					
@@ -65,7 +69,9 @@ public class AddDeviceAction extends AbstractAction{
 				}
 			}
 
-			this.deviceControlPane.addTab(device.getDeviceID(), new DeviceControlPane(this.device, Devices.getDevices(), null));
+			List<AndroidDevice> deviceList = new ArrayList<>();
+			deviceList.add(device);
+			this.deviceControlPane.addTab(device.getDeviceID(), new TestSuiteControlPane(deviceList, Devices.getDevices(), null));
 			this.deviceControlPane.setTabComponentAt(tabCount, new ButtonTabComponent(this.deviceControlPane));
 			this.deviceControlPane.setToolTipTextAt(tabCount, "Device: " + this.device.getDeviceName() + "-" + this.device.getDeviceID());
 		}

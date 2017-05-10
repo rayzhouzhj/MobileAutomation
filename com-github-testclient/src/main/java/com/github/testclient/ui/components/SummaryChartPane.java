@@ -22,10 +22,10 @@ import com.github.testclient.ui.constant.TestCaseDataTableColumns;
 
 public class SummaryChartPane extends JPanel{
 
-	private DeviceControlPane deviceControlPane;
+	private TestSuiteControlPane deviceControlPane;
 	private TestCaseDataTable table;
 
-	public SummaryChartPane(DeviceControlPane pane, JTable table)
+	public SummaryChartPane(TestSuiteControlPane pane, JTable table)
 	{
 		this.deviceControlPane = pane;
 		this.table = (TestCaseDataTable)table;
@@ -118,25 +118,22 @@ public class SummaryChartPane extends JPanel{
 
 
 		// Update pane with the scheduled testcase status
-		TestManager testManager = TestManager.getInstance(this.deviceControlPane.getSelectedDevice());
+		TestManager testManager = TestManager.getInstance(this.deviceControlPane.getTestSuiteName());
 		if(testManager.isRunning())
 		{
 			int scheduled = testManager.getScheduledTestCaseCount();
-			int completed = testManager.getCompletedCount();
+			long completed = testManager.getCompletedCount();
+			long inProgress = testManager.getInProgressCount();
 
 			this.scheduledScript.setText(String.format("%1$3s", scheduled));
 			this.completedScript.setText(String.format("%1$3s", completed));
-			String scriptName = testManager.getActiveTestCase().getScriptName();
-			scriptName = scriptName.length() >=20? (scriptName.substring(0, 17) + "...") : scriptName;
-			this.currentScript.setText(scriptName);
-			this.currentStatus.setText(testManager.getActiveTestCase().getStatus().toString());
+			this.inProgressScripts.setText(String.format("%1$3s", inProgress));
 		}
 		else
 		{
 			this.scheduledScript.setText(String.format("%1$3s", 0));
 			this.completedScript.setText(String.format("%1$3s", 0));
-			this.currentScript.setText("NA");
-			this.currentStatus.setText("NA");
+			this.inProgressScripts.setText(String.format("%1$3s", 0));
 		}
 
 		DefaultKeyedValues values = new DefaultKeyedValues();
@@ -190,7 +187,7 @@ public class SummaryChartPane extends JPanel{
 		jLabel9 = new javax.swing.JLabel();
 		scheduledScript = new javax.swing.JLabel();
 		completedScript = new javax.swing.JLabel();
-		currentScript = new javax.swing.JLabel();
+		inProgressScripts = new javax.swing.JLabel();
 		currentStatus = new javax.swing.JLabel();
 		jSeparator2 = new javax.swing.JSeparator();
 		exportTestResult = new javax.swing.JButton();
@@ -223,10 +220,10 @@ public class SummaryChartPane extends JPanel{
 		jLabel2.setName(""); // NOI18N
 
 		jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-		jLabel3.setText("Current Script:");
+		jLabel3.setText("In Progress:");
 
-		jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-		jLabel4.setText("Current Status:");
+//		jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+//		jLabel4.setText("Current Status:");
 
 		totalScript.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 		totalScript.setText("0");
@@ -261,11 +258,11 @@ public class SummaryChartPane extends JPanel{
 		completedScript.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 		completedScript.setText("0");
 
-		currentScript.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-		currentScript.setText("NA");
+		inProgressScripts.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+		inProgressScripts.setText("0");
 
-		currentStatus.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-		currentStatus.setText("NA");
+//		currentStatus.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+//		currentStatus.setText("NA");
 
 		jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -318,7 +315,7 @@ public class SummaryChartPane extends JPanel{
 																																		.addComponent(jLabel4))
 																																		.addGap(18, 18, 18)
 																																		.addGroup(summaryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-																																				.addComponent(currentScript)
+																																				.addComponent(inProgressScripts)
 																																				.addComponent(currentStatus))
 																																				.addGap(0, 0, Short.MAX_VALUE))))
 				);
@@ -353,7 +350,7 @@ public class SummaryChartPane extends JPanel{
 																						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																						.addGroup(summaryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 																								.addComponent(jLabel3)
-																								.addComponent(currentScript))
+																								.addComponent(inProgressScripts))
 																								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																								.addGroup(summaryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 																										.addComponent(jLabel4)
@@ -431,7 +428,7 @@ public class SummaryChartPane extends JPanel{
 	private javax.swing.JPanel summaryPane;
 	private ChartPanel chartsDetailPane;
 	private javax.swing.JLabel completedScript;
-	private javax.swing.JLabel currentScript;
+	private javax.swing.JLabel inProgressScripts;
 	private javax.swing.JLabel currentStatus;
 
 }

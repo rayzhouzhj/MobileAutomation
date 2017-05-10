@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import com.github.testclient.TestManager;
 import com.github.testclient.models.TestCase;
 import com.github.testclient.ui.components.DataTableModel;
-import com.github.testclient.ui.components.DeviceControlPane;
+import com.github.testclient.ui.components.TestSuiteControlPane;
 import com.github.testclient.ui.components.GlobalVarDataTable;
 import com.github.testclient.ui.components.TestCaseDataTable;
 import com.github.testclient.ui.constant.TestCaseDataTableColumns;
@@ -24,9 +24,9 @@ public class RunButtonActionListener implements ActionListener {
 	private TestCaseDataTable testCaseDataTable;
 	private JComboBox filter;
 	private boolean isDeviceAvailable = false;
-	private DeviceControlPane deviceControlPane;
+	private TestSuiteControlPane deviceControlPane;
 
-	public RunButtonActionListener(DeviceControlPane deviceControlPane)
+	public RunButtonActionListener(TestSuiteControlPane deviceControlPane)
 	{
 		this.button = deviceControlPane.getRunButton();
 		this.globalvarTable = (GlobalVarDataTable) deviceControlPane.getGlobalDataTable();
@@ -40,29 +40,6 @@ public class RunButtonActionListener implements ActionListener {
 
 		if(!button.isEnabled()) return;
 
-		button.setEnabled(false);
-
-		String defalutDevice = this.deviceControlPane.getSelectedDevice().getDeviceID();
-		
-		// Refresh Device ID for all test cases
-		((DataTableModel)this.testCaseDataTable.getModel()).updateColumnValue(
-				TestCaseDataTableColumns.DEVICE.INDEX, 
-				defalutDevice);
-		
-		DeviceConfiguration config = new DeviceConfiguration();
-		try {
-			List<String> devices = config.getDivceList();
-			if(!devices.contains(defalutDevice))
-			{
-				JOptionPane.showMessageDialog(null, "Device " + defalutDevice + " is disconnected, please reconnect device and try again!");
-				button.setEnabled(true);
-				
-				return;
-			}
-			
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
 		
 		List<TestCase> list = this.testCaseDataTable.getFilteredTestCases(this.globalvarTable.getGlobalVars(), this.filter.getSelectedItem().toString());
 
@@ -74,12 +51,13 @@ public class RunButtonActionListener implements ActionListener {
 			return;
 		}
 		
-		TestManager tm = TestManager.getInstance(this.deviceControlPane.getSelectedDevice());
+		TestManager tm = TestManager.getInstance(this.deviceControlPane.getTestSuiteName());
+		tm.associateDevices(this.deviceControlPane.getSelectedDevice());
 		tm.clearPendingQueue();
 		tm.loadTestCase(list);
 
 		// Start Test Manager
-		new Thread(tm).start();
+		tm.addTestCaseToQueue();
 
 		// Monitor the status change of each test case
 		Thread updateTMStatus = new Thread(new Runnable(){
@@ -116,7 +94,7 @@ public class RunButtonActionListener implements ActionListener {
 
 					try 
 					{
-						Thread.sleep(5000);
+						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

@@ -49,7 +49,8 @@ public class InitializationFrame extends javax.swing.JFrame {
 		this.setVisible(false);
 		
 		Devices.setDevices(this.devices);
-		ChooseDeviceFrame.launchChooseDevice(this.devices);
+//		ChooseDeviceFrame.launchChooseDevice(this.devices);
+		NewChooseDeviceFrame.launchChooseDevice(this.devices);
 	}
 	
 	private void initDeviceList() 

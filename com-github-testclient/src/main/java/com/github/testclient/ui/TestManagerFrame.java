@@ -1,14 +1,16 @@
 package com.github.testclient.ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
+import com.github.testclient.context.Context;
 import com.github.testclient.ui.components.ButtonTabComponent;
-import com.github.testclient.ui.components.DeviceControlPane;
+import com.github.testclient.ui.components.TestSuiteControlPane;
 import com.github.testclient.ui.components.ToolMenuBar;
 import com.github.testclient.ui.components.listener.ToolWindowListener;
 import com.github.testclient.util.AndroidDevice;
@@ -17,18 +19,20 @@ import com.github.testclient.util.JunitReader;
 public class TestManagerFrame extends JFrame {
 	
 	private List<AndroidDevice> devices;
+	List<AndroidDevice> selectedDevices;
 	private ScheduleControlFrame scheduler;
 	
-	public TestManagerFrame(String selectedDevice, List<AndroidDevice> devices, String templateName) {
+	public TestManagerFrame(List<AndroidDevice> selectedDevices, List<AndroidDevice> devices, String templateName) {
 		this.devices = devices;
+		this.selectedDevices = selectedDevices;
 		this.setTitle("TestManager");
 		
-		initComponents(selectedDevice, templateName);
+		initComponents(templateName);
 	}
 	
-    public TestManagerFrame() {
-        initComponents(null, null);
-    }
+//    public TestManagerFrame() {
+//        initComponents(null, null);
+//    }
 
     private void initTestCaseTreeFolder()
     {
@@ -50,7 +54,7 @@ public class TestManagerFrame extends JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
-    private void initComponents(String option, String templateName) {
+    private void initComponents(String templateName) {
 
     	initTestCaseTreeFolder();
     	
@@ -62,38 +66,32 @@ public class TestManagerFrame extends JFrame {
         
         
         menuBar = new ToolMenuBar(this);
-//        addWindowListener(new ToolWindowListener(testCasesTbl));
         setJMenuBar(menuBar);
         
         // Initialize devices base on selection
-        if(option == null)
+        if(Context.getInstance().getAttribute("DistributeTest").equalsIgnoreCase("True"))
         {
-        	devicesTabbdPane.addTab("Temp", new DeviceControlPane(null, this.devices, templateName));
+        	String suiteName = "TempSuite";
+        	if(templateName != null && !templateName.isEmpty())
+    		{
+        		suiteName = templateName.split("\\.")[0];
+    		}
+        	
+        	devicesTabbdPane.addTab(suiteName, new TestSuiteControlPane(this.selectedDevices, this.devices, templateName));
             devicesTabbdPane.setTabComponentAt(0, new ButtonTabComponent(devicesTabbdPane));
-        }
-        else if("All Devices".equalsIgnoreCase(option))
-        {
-        	for(int index = 0; index < this.devices.size(); index++)
-        	{
-        		AndroidDevice device = this.devices.get(index);
-        		devicesTabbdPane.addTab(device.getDeviceID(), new DeviceControlPane(device, this.devices, templateName));
-                devicesTabbdPane.setTabComponentAt(index, new ButtonTabComponent(devicesTabbdPane));
-                devicesTabbdPane.setToolTipTextAt(index, "Device: " + device.getDeviceName() + "-" + device.getDeviceID());
-        	}
         }
         else
         {
-        	for(AndroidDevice device : devices)
-    		{
-    			if(option.contains(device.getDeviceID()))
-    			{
-    				devicesTabbdPane.addTab(device.getDeviceID(), new DeviceControlPane(device, this.devices, templateName));
-                    devicesTabbdPane.setTabComponentAt(0, new ButtonTabComponent(devicesTabbdPane));
-                    devicesTabbdPane.setToolTipTextAt(0, "Device: " + device.getDeviceName() + "-" + device.getDeviceID());
-                    
-                    break;
-    			}
-    		}
+        	for(int index = 0; index < this.selectedDevices.size(); index++)
+        	{
+        		AndroidDevice device = this.devices.get(index);
+        		List<AndroidDevice> deviceList = new ArrayList<>();
+        		deviceList.add(device);
+        		
+        		devicesTabbdPane.addTab(device.getDeviceID(), new TestSuiteControlPane(deviceList, this.devices, templateName));
+                devicesTabbdPane.setTabComponentAt(index, new ButtonTabComponent(devicesTabbdPane));
+                devicesTabbdPane.setToolTipTextAt(index, "Device: " + device.getDeviceName() + "-" + device.getDeviceID());
+        	}
         }
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -127,7 +125,7 @@ public class TestManagerFrame extends JFrame {
 		return this.scheduler;
     }
     
-    public static void launch(String selectedDevice, List<AndroidDevice> availableDevices, String templateName)
+    public static void launch(List<AndroidDevice> selectedDevices, List<AndroidDevice> availableDevices, String templateName)
 	{
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -152,7 +150,7 @@ public class TestManagerFrame extends JFrame {
 			public void run() 
 			{
 				TestManagerFrame ui;
-				ui = new TestManagerFrame(selectedDevice, availableDevices, templateName);
+				ui = new TestManagerFrame(selectedDevices, availableDevices, templateName);
 				
 				ui.setLocationRelativeTo(null);
 				ui.setVisible(true);
