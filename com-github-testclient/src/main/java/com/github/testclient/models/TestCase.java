@@ -58,6 +58,7 @@ public class TestCase implements Runnable {
 	public void setLogViewer(LogViewerFrame viewer)
 	{
 		this.logViewer = viewer;
+		this.logViewer.setTitle(m_scriptDisplayName);
 	}
 	
 	public LogViewerFrame getLogViewer()
