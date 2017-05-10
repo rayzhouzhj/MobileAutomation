@@ -434,6 +434,7 @@ public class TestCase implements Runnable {
 			this.calculateResultFilePath();
 			
 			this.logViewer.setTitle(this.m_scriptDisplayName);
+			this.logViewer.repaint();
 			
 			// Get execution command
 			String statement = generateExecutionCommand();

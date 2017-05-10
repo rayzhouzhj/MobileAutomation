@@ -82,15 +82,15 @@ public class TestManagerFrame extends JFrame {
         }
         else
         {
-        	for(AndroidDevice device : selectedDevices)
+        	for(int index = 0; index < this.selectedDevices.size(); index++)
         	{
+        		AndroidDevice device = this.devices.get(index);
         		List<AndroidDevice> deviceList = new ArrayList<>();
         		deviceList.add(device);
+        		
         		devicesTabbdPane.addTab(device.getDeviceID(), new TestSuiteControlPane(deviceList, this.devices, templateName));
-        		devicesTabbdPane.setTabComponentAt(0, new ButtonTabComponent(devicesTabbdPane));
-        		devicesTabbdPane.setToolTipTextAt(0, "Device: " + device.getDeviceName() + "-" + device.getDeviceID());
-
-        		break;
+                devicesTabbdPane.setTabComponentAt(index, new ButtonTabComponent(devicesTabbdPane));
+                devicesTabbdPane.setToolTipTextAt(index, "Device: " + device.getDeviceName() + "-" + device.getDeviceID());
         	}
         }
         
