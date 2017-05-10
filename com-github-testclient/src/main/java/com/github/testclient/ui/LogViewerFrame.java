@@ -12,11 +12,6 @@ public class LogViewerFrame extends javax.swing.JFrame {
 	/**
 	 * Creates new form LogViewer
 	 */
-	public LogViewerFrame(AndroidDevice device) {
-		this.device = device;
-		initComponents();
-	}
-	
 	public LogViewerFrame() {
 		initComponents();
 	}
@@ -34,14 +29,6 @@ public class LogViewerFrame extends javax.swing.JFrame {
 		logArea = new javax.swing.JTextArea();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
-		if(this.device != null)
-		{
-			setTitle("LogViewer: " + this.device.getDeviceName() + "-" + this.device.getDeviceID());
-		}
-		else
-		{
-			setTitle("LogViewer");
-		}
 
 		logArea.setEditable(false);
 		logArea.setColumns(20);
@@ -77,13 +64,6 @@ public class LogViewerFrame extends javax.swing.JFrame {
 	public void clearText()
 	{
 		this.logArea.setText("");
-	}
-
-	/**
-	 * @param args the command line arguments
-	 */
-	public static void main(String args[]) throws InterruptedException {
-
 	}
 
 	// Variables declaration - do not modify                     

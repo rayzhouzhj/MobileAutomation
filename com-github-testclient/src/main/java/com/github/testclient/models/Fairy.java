@@ -114,6 +114,9 @@ public class Fairy implements Runnable {
 					m_logger.info("Test execution of [" + m_activeTestCase.getScriptName() + "] is completed with status: [" + m_activeTestCase.getStatus().toString() + "]");
 				}
 
+				// Remove LogViewer from testcase
+				m_activeTestCase.removeLogViewer();
+				
 				// Update status change queue to final status
 				updateTestCaseStatus();
 				
