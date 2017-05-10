@@ -1,11 +1,12 @@
 package com.github.testclient.ui.components.action;
 
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 
 import com.github.testclient.models.Devices;
-import com.github.testclient.ui.ChooseDeviceFrame;
+import com.github.testclient.ui.NewChooseDeviceFrame;
 import com.github.testclient.ui.components.TestSuiteControlPane;
 import com.github.testclient.util.AndroidDevice;
 
@@ -24,7 +25,7 @@ public class AssociateDeviceAction extends AbstractAction{
 		new Thread(new Runnable() {
 			public void run() {
 
-				ChooseDeviceFrame chooseDevice = new ChooseDeviceFrame(Devices.getDevices(), false);
+				NewChooseDeviceFrame chooseDevice = new NewChooseDeviceFrame(deviceControlPane.getSelectedDevice(), Devices.getDevices(), false);
 				chooseDevice.setLocationRelativeTo(null);
 				chooseDevice.setVisible(true);
 
@@ -38,11 +39,11 @@ public class AssociateDeviceAction extends AbstractAction{
 					}
 				}
 
-				AndroidDevice device = chooseDevice.getselectedDevice();
+				List<AndroidDevice> devices = chooseDevice.getselectedDevices();
 
-				if(device != null)
+				if(devices != null && devices.size() > 0 )
 				{
-					deviceControlPane.associateDevice(device);
+					deviceControlPane.associateDevices(devices);
 				}
 
 				chooseDevice.dispose();

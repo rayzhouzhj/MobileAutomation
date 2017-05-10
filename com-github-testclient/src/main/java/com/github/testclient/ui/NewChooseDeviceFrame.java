@@ -303,6 +303,14 @@ public class NewChooseDeviceFrame extends javax.swing.JFrame {
 		initComponents();
 	}
 	
+	public NewChooseDeviceFrame(List<AndroidDevice> selectedDevices, List<AndroidDevice> allDevices, boolean launchFlag) {
+		this.alldevices = allDevices;
+		this.selectedDevices = selectedDevices;
+		this.launchTestManagerFlag = launchFlag;
+		
+		initComponents();
+	}
+	
 	private void quitButtonMouseClicked(java.awt.event.MouseEvent evt) {
 		if(launchTestManagerFlag)
 		{
@@ -319,6 +327,7 @@ public class NewChooseDeviceFrame extends javax.swing.JFrame {
 
 		boolean isDeviceFound = false;
 
+		this.selectedDevices.clear();
 		List<String> deviceList = this.chooseDeviceList.getSelectedValuesList();
 		
 		for(AndroidDevice device : alldevices)
@@ -372,11 +381,30 @@ public class NewChooseDeviceFrame extends javax.swing.JFrame {
 		try
 		{
 			DefaultListModel<String> listModel = new DefaultListModel<>();
-
-			for(AndroidDevice item : alldevices)
+			List<Integer> selectedIndices = new ArrayList<>();
+			
+			for(int index = 0; index < alldevices.size(); index++)
 			{
+				AndroidDevice item = alldevices.get(index);
+				
 				listModel.addElement(item.getDeviceName() + "/" + item.getDeviceID());
-				this.chooseDeviceList.setModel(listModel);
+				
+				if(!this.launchTestManagerFlag && this.selectedDevices != null && this.selectedDevices.contains(item))
+				{
+					selectedIndices.add(index);
+				}
+			}
+			
+			this.chooseDeviceList.setModel(listModel);
+			
+			if(!this.launchTestManagerFlag)
+			{
+				int[] indices = new int[selectedIndices.size()];
+				for(int i = 0; i < indices.length; i++)
+				{
+					indices[i] = selectedIndices.get(i);
+				}
+				this.chooseDeviceList.setSelectedIndices(indices);
 			}
 		}
 		catch(Exception e)
