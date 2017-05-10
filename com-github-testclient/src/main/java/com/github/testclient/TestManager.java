@@ -97,6 +97,11 @@ public class TestManager
 	{
 		return m_tcList.stream().filter(tc -> tc.getStatus() != TestCaseStatus.Pending).count();
 	}
+	
+	public long getInProgressCount()
+	{
+		return m_tcList.stream().filter(tc -> tc.getStatus() == TestCaseStatus.Running).count();
+	}
 
 	public void loadTestCase(List<TestCase> list)
 	{

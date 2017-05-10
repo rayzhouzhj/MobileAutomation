@@ -52,6 +52,7 @@ public class RunButtonActionListener implements ActionListener {
 		}
 		
 		TestManager tm = TestManager.getInstance(this.deviceControlPane.getTestSuiteName());
+		tm.associateDevices(this.deviceControlPane.getSelectedDevice());
 		tm.clearPendingQueue();
 		tm.loadTestCase(list);
 
@@ -93,7 +94,7 @@ public class RunButtonActionListener implements ActionListener {
 
 					try 
 					{
-						Thread.sleep(5000);
+						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

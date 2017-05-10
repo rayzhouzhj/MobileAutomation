@@ -72,7 +72,8 @@ public class Fairy implements Runnable {
 						+ " with status: " + m_activeTestCase.getStatus());
 				
 				// Update test case with selected device
-				m_activeTestCase.setDevice(m_device);
+				m_activeTestCase.setDevice(this.m_device);
+				m_activeTestCase.setLogViewer(this.logViewer);
 				
 				// Move on to next test case if the current test is not pending
 				if(m_activeTestCase.getStatus() != TestCaseStatus.Pending)
