@@ -44,6 +44,11 @@ public class ShowLogAction  extends AbstractAction{
 		{
 			logViewer.setVisible(true);
 		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Selected testcase is not Running!");
+			return;
+		}
 	}
 
 }
