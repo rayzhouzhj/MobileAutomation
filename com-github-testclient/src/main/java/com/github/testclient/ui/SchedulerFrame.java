@@ -295,7 +295,7 @@ public class SchedulerFrame extends javax.swing.JFrame {
 
 	private void scheduleBtnActionPerformed(java.awt.event.ActionEvent evt) {
 		
-		if(this.deviceControlPane.getSelectedDevice() == null)
+		if(this.deviceControlPane.getSelectedDevices() == null)
 		{
 			JOptionPane.showMessageDialog(null, "No device is associated!");
 			

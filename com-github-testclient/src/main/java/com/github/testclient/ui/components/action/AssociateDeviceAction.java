@@ -25,7 +25,7 @@ public class AssociateDeviceAction extends AbstractAction{
 		new Thread(new Runnable() {
 			public void run() {
 
-				NewChooseDeviceFrame chooseDevice = new NewChooseDeviceFrame(deviceControlPane.getSelectedDevice(), Devices.getDevices(), false);
+				NewChooseDeviceFrame chooseDevice = new NewChooseDeviceFrame(deviceControlPane.getSelectedDevices(), Devices.getDevices(), false);
 				chooseDevice.setLocationRelativeTo(null);
 				chooseDevice.setVisible(true);
 

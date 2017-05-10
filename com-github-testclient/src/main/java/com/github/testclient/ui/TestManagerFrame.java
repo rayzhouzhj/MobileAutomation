@@ -77,18 +77,19 @@ public class TestManagerFrame extends JFrame {
         		suiteName = templateName.split("\\.")[0];
     		}
         	
-        	devicesTabbdPane.addTab(suiteName, new TestSuiteControlPane(this.selectedDevices, this.devices, templateName));
+        	devicesTabbdPane.addTab(suiteName, new TestSuiteControlPane(suiteName, this.selectedDevices, this.devices, templateName));
             devicesTabbdPane.setTabComponentAt(0, new ButtonTabComponent(devicesTabbdPane));
         }
         else
         {
         	for(int index = 0; index < this.selectedDevices.size(); index++)
         	{
-        		AndroidDevice device = this.devices.get(index);
+        		AndroidDevice device = this.selectedDevices.get(index);
         		List<AndroidDevice> deviceList = new ArrayList<>();
         		deviceList.add(device);
         		
-        		devicesTabbdPane.addTab(device.getDeviceID(), new TestSuiteControlPane(deviceList, this.devices, templateName));
+        		String suiteName = device.getDeviceID();
+        		devicesTabbdPane.addTab(suiteName, new TestSuiteControlPane(suiteName, deviceList, this.devices, templateName));
                 devicesTabbdPane.setTabComponentAt(index, new ButtonTabComponent(devicesTabbdPane));
                 devicesTabbdPane.setToolTipTextAt(index, "Device: " + device.getDeviceName() + "-" + device.getDeviceID());
         	}

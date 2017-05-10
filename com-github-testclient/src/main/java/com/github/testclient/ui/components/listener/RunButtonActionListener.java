@@ -52,7 +52,7 @@ public class RunButtonActionListener implements ActionListener {
 		}
 		
 		TestManager tm = TestManager.getInstance(this.deviceControlPane.getTestSuiteName());
-		tm.associateDevices(this.deviceControlPane.getSelectedDevice());
+		tm.associateDevices(this.deviceControlPane.getSelectedDevices());
 		tm.clearPendingQueue();
 		tm.loadTestCase(list);
 

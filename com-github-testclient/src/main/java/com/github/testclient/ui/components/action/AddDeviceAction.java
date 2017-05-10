@@ -50,7 +50,8 @@ public class AddDeviceAction extends AbstractAction{
 				{
 					List<AndroidDevice> deviceList = new ArrayList<>();
 					deviceList.add(tempDevice);
-					this.deviceControlPane.addTab(tempDevice.getDeviceID(), new TestSuiteControlPane(deviceList, Devices.getDevices(), null));
+					String suiteName = device.getDeviceID();
+					this.deviceControlPane.addTab(suiteName, new TestSuiteControlPane(suiteName, deviceList, Devices.getDevices(), null));
 					this.deviceControlPane.setTabComponentAt(tabCount, new ButtonTabComponent(this.deviceControlPane));
 					this.deviceControlPane.setToolTipTextAt(tabCount, "Device: " + tempDevice.getDeviceName() + "-" + tempDevice.getDeviceID());
 					
@@ -71,7 +72,8 @@ public class AddDeviceAction extends AbstractAction{
 
 			List<AndroidDevice> deviceList = new ArrayList<>();
 			deviceList.add(device);
-			this.deviceControlPane.addTab(device.getDeviceID(), new TestSuiteControlPane(deviceList, Devices.getDevices(), null));
+			String suiteName = device.getDeviceID();
+			this.deviceControlPane.addTab(suiteName, new TestSuiteControlPane(suiteName, deviceList, Devices.getDevices(), null));
 			this.deviceControlPane.setTabComponentAt(tabCount, new ButtonTabComponent(this.deviceControlPane));
 			this.deviceControlPane.setToolTipTextAt(tabCount, "Device: " + this.device.getDeviceName() + "-" + this.device.getDeviceID());
 		}

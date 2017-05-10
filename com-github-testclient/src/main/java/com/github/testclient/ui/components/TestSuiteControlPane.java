@@ -28,7 +28,8 @@ public class TestSuiteControlPane extends JPanel{
 	private SchedulerFrame scheduler;
 	private String defaultTemplate;
 	
-	public TestSuiteControlPane(List<AndroidDevice> selectedDevices, List<AndroidDevice> devices, String template) {
+	public TestSuiteControlPane(String suiteName, List<AndroidDevice> selectedDevices, List<AndroidDevice> devices, String template) {
+		this.suiteName = suiteName;
 		this.associated_devices = selectedDevices;
 		this.all_devices = devices;
 		this.defaultTemplate = template;
@@ -260,7 +261,7 @@ public class TestSuiteControlPane extends JPanel{
 		return this.globalVarsTbl;
 	}
 	
-	public List<AndroidDevice> getSelectedDevice()
+	public List<AndroidDevice> getSelectedDevices()
 	{
 		return this.associated_devices;
 	}
