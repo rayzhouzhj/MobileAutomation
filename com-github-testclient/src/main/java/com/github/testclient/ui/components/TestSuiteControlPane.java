@@ -101,7 +101,7 @@ public class TestSuiteControlPane extends JPanel{
         stopButton.setText("STOP");
         stopButton.addActionListener(new StopButtonActionListener(this));
         
-        stopOption.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Current Script", "All" }));
+        stopOption.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selected", "All" }));
 
         saveAsTemplateButton.setText("Save As Template");
         saveAsTemplateButton.addMouseListener(new SaveAsTemplateMouseListener(testCasesTbl, templateList));

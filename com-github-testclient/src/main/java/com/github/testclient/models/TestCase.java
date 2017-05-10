@@ -15,13 +15,12 @@ import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
-import com.github.testclient.TestManager;
-import com.github.testclient.context.Configurations;
 import com.github.testclient.context.Constants;
 import com.github.testclient.context.Context;
 import com.github.testclient.ui.LogViewerFrame;
@@ -53,7 +52,7 @@ public class TestCase implements Runnable {
 	private LocalDateTime m_endTime;
 	private LogViewerFrame logViewer;
 	private Logger m_logger = Logger.getLogger("TestCase");
-	private boolean m_stopExecutionFlag = false;
+	private AtomicBoolean m_stopExecutionFlag = new AtomicBoolean(false);
 
 	public void setLogViewer(LogViewerFrame viewer)
 	{
@@ -430,9 +429,11 @@ public class TestCase implements Runnable {
 			m_startTime = LocalDateTime.now();
 
 			// Exit if script is stopped before real execution
-			if(this.m_stopExecutionFlag) return;
+			if(this.m_stopExecutionFlag.get()) return;
 			// Calculate the result file path
 			this.calculateResultFilePath();
+			
+			this.logViewer.setTitle(this.m_scriptDisplayName);
 			
 			// Get execution command
 			String statement = generateExecutionCommand();
@@ -496,7 +497,12 @@ public class TestCase implements Runnable {
 
 	public void stopExecution()
 	{
-		m_stopExecutionFlag = true;
+		// If still locking JVM, release the lock
+		releaseJVMProcessLock();
+		// Stop NodeJs process
+		stopNodeJSProcess();
+		
+		m_stopExecutionFlag.set(true);
 
 		if(m_process == null)
 		{
@@ -509,6 +515,7 @@ public class TestCase implements Runnable {
 			m_logger.info("Stop the current test execution: " + this.m_scriptDisplayName);
 
 			this.m_status = TestCaseStatus.Aborted;
+			
 			// Set End Time
 			m_endTime = LocalDateTime.now();
 
@@ -519,7 +526,6 @@ public class TestCase implements Runnable {
 				m_processID = null;
 			}
 
-			this.stopNodeJSProcess();
 		} 
 		catch (Exception e) 
 		{
@@ -587,7 +593,7 @@ public class TestCase implements Runnable {
 			LocalDateTime startTime = LocalDateTime.now();
 			LocalDateTime endTime = LocalDateTime.now();
 
-			while(startTime.until(endTime, ChronoUnit.SECONDS) < 90)
+			while(!this.m_stopExecutionFlag.get() && startTime.until(endTime, ChronoUnit.SECONDS) < 90)
 			{
 				System.out.println("INFO: JVM is locked, wait for 5 seconds and try again.");
 				try 
@@ -681,6 +687,10 @@ public class TestCase implements Runnable {
 			else if("Warning".equalsIgnoreCase(finalStatus))
 			{
 				this.m_status = TestCaseStatus.Warning;
+			}
+			else if("Running".equalsIgnoreCase(finalStatus))
+			{
+				this.m_status = TestCaseStatus.Aborted;
 			}
 			else
 			{

@@ -32,7 +32,7 @@ public class StopButtonActionListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		List<TestCase> list = this.testCaseDataTable.getFilteredTestCases(this.globalvarTable.getGlobalVars(), this.action.getSelectedItem().toString());
 
-		if(list.size() == 0)
+		if(list.size() == 0 && this.action.getSelectedItem().toString().equalsIgnoreCase("Selected"))
 		{
 			JOptionPane.showMessageDialog(null, "No Script is selected.");
 

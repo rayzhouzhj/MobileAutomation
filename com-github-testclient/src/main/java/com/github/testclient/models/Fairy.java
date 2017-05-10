@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import com.github.testclient.TestManager;
 import com.github.testclient.ui.LogViewerFrame;
 import com.github.testclient.util.AndroidDevice;
+import com.github.testclient.util.DeviceLock;
 
 public class Fairy implements Runnable {
 
@@ -85,6 +86,9 @@ public class Fairy implements Runnable {
 				// Update status change queue
 				updateTestCaseStatus();
 
+				// Remove device log
+				DeviceLock.releaseDeviceLock(this.m_device);
+				
 				Thread executionThread = new Thread(m_activeTestCase);
 				executionThread.start();
 
