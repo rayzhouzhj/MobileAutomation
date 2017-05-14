@@ -84,7 +84,6 @@ public class BaseUITest extends BaseTest{
 
 		// Try to set screen timeout again
 		ADBShell.setScreenTimeout(this.getDeviceID(), 15);
-		startUnLockScreenService();
 
 		try	{
 			System.out.println("INFO: Trying to connect to Device Name [" + deviceName + "] with ID [" + deviceID + "]...");
@@ -114,8 +113,6 @@ public class BaseUITest extends BaseTest{
 			logger.error("Unable to connect to device", e);
 		}
 
-		stopUnLockScreenService();
-
 		if(!isConnected)
 		{
 			TestContext.getInstance().setVariable("Status", "FAILED");
@@ -140,7 +137,6 @@ public class BaseUITest extends BaseTest{
 
 		// Try to set screen timeout again
 		ADBShell.setScreenTimeout(this.getDeviceID(), 15);
-		startUnLockScreenService();
 
 		while(count < reTryCount)
 		{
@@ -186,8 +182,6 @@ public class BaseUITest extends BaseTest{
 				startAppium();
 			}
 		}
-
-		stopUnLockScreenService();
 
 		if(!isConnected)
 		{

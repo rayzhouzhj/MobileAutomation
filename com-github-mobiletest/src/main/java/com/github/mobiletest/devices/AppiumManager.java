@@ -43,6 +43,8 @@ public class AppiumManager {
 			}
 
 			System.out.println("INFO: Created appium lock.");
+			TestContext.getInstance().setVariable("AppiumLockByMe", "TRUE");
+			
 			return true;
 		}
 		catch(Exception e)
@@ -55,6 +57,8 @@ public class AppiumManager {
 	{
 		try
 		{
+			TestContext.getInstance().setVariable("AppiumLockByMe", "FALSE");
+			
 			Path lockFile = Paths.get("appium.lck");
 			if(!Files.exists(lockFile))
 			{

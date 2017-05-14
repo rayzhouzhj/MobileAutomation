@@ -139,7 +139,6 @@ public class BaseTest {
 		} catch (Exception e) {
 
 			appiumMan.stopAppium(deviceID);
-//			info("Tear Down", "Fail to Tear down test environment", false);
 		}
 		
 		if("Failed".equalsIgnoreCase(TestContext.getInstance().getVariable("Status")))
