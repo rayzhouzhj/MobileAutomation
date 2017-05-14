@@ -7,4 +7,4 @@ Goal:
 For more detail, please review the wiki page: https://github.com/rayzhouzhj/MobileAutomation/wiki
 
 # Test Client Overview
-![overview](https://lh5.googleusercontent.com/D5IeIQqu_gMVl2Jj3xPb_TxYL2Iuko9NCZHf54ox-KZnNuyvUepTJ5XTrT2esFl9jqkyYA69=w3360-h1760)
+![overview](https://github.com/rayzhouzhj/MobileAutomation/blob/master/com-github-testclient/screenshots/overview.png?raw=true)
